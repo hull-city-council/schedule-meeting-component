@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
-    console.log(meetingData);
+    console.log(timeslots);
   }, [meetingData]);
 
   if (meetingData) {
