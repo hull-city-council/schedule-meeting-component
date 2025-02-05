@@ -39,7 +39,7 @@ function App() {
 
   return (
     <>
-      {timeslots.length > 0 ? (
+      {timeslots ? (
         <ScheduleMeeting
           borderRadius={10}
           primaryColor="#03a9f4"
