@@ -11,7 +11,6 @@ function App() {
     const handleAppointmentsFound = (e) => {
       console.log("Event received:", e.detail);
       setMeetingData(e.detail);
-      console.log(meetingData);
     };
   
     subscribe("appointmentsFound", handleAppointmentsFound);
@@ -23,6 +22,7 @@ function App() {
 
   useEffect(() => {
     if (meetingData) {
+      console.log("Meeting 🧨", meetingData);
       const newTimeslots = [];
       console.log("meeting data:", meetingData.data);
       meetingData?.data?.forEach(day => {
