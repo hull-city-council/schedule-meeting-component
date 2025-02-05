@@ -3,7 +3,7 @@ import { ScheduleMeeting } from "react-schedule-meeting";
 import { subscribe, unsubscribe } from "./events";
 
 function App() {
-  
+
   const timeslots = [];
   const [meetingData, setMeetingData] = useState([]);
 
@@ -20,7 +20,8 @@ function App() {
   });
 
   if (meetingData.length > 0) {
-    meetingData.data.forEach(day => {
+    console.log(JSON.parse(meetingData.data));
+    JSON.parse(meetingData.data).forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if(day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
