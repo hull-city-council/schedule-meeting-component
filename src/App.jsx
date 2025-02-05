@@ -9,30 +9,27 @@ function App() {
 
   useEffect(() => {
     subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
-    console.log(meetingData)
-    if (meetingData) {
-      meetingData?.data?.forEach(day => {
-        console.log(day);
-        Object.keys(day?.appointments).forEach(unixTime => {
-          console.log(unixTime);
-          if(day?.appointments[unixTime] === "available") {
-            const startTime = new Date(unixTime * 1000);
-            const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
-            timeslots.push({ id: unixTime, startTime, endTime });
-          }
-        })
-      })
-      console.log(timeslots);
-    }
   }, [meetingData]);
+
+  if (meetingData) {
+    meetingData?.data?.forEach(day => {
+      Object.keys(day?.appointments).forEach(unixTime => {
+        if(day?.appointments[unixTime] === "available") {
+          const startTime = new Date(unixTime * 1000);
+          const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
+          timeslots.push({ id: parseInt(unixTime), startTime, endTime });
+        }
+      })
+    })
+  }
 
   return (
     <>
-      {meetingData ? (
+      {timeslots.length > 0 ? (
         <ScheduleMeeting
           borderRadius={10}
           primaryColor="#03a9f4"
-          eventDurationInMinutes={30}
+          eventDurationInMinutes={15}
           availableTimeslots={timeslots}
           onStartTimeSelect={console.log}
           startTimeListStyle="scroll-list"
