@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
+import { subscribe, unsubscribe } from "./events";
 
+function App() {
 
-function App({ data }) {
+  const [ meetingData, setMeetingData ] = useState([]);
+
+  useEffect(() => {
+    subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
+  }, [meetingData]);
 
   const availableTimeslots = [0, 1, 2, 3, 4, 5].map((id) => {
     return {
@@ -12,7 +18,9 @@ function App({ data }) {
     };
   });
 
-  console.log(data?.json());
+  if(meetingData) {
+    console.log("data received:", meetingData);
+  }
 
   return (
     <>
