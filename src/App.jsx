@@ -9,19 +9,8 @@ function App() {
 
   useEffect(() => {
     subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
-  }, [meetingData]);
 
-  const availableTimeslots = [0, 1, 2, 3, 4, 5].map((id) => {
-    return {
-      id,
-      startTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(9, 0, 0, 0)),
-      endTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(17, 0, 0, 0)),
-    };
-  });
-
-  if (meetingData.length > 0) {
-    console.log(JSON.parse(meetingData.data));
-    JSON.parse(meetingData.data).forEach(day => {
+    meetingData.data.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if(day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
@@ -30,7 +19,8 @@ function App() {
         }
       })
     })
-  }
+
+  }, [meetingData]);
 
   return (
     <>
