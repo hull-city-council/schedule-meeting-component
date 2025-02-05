@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (meetingData) {
+    if (meetingData.data) {
       const newTimeslots = [];
       const dataArray = meetingData.data;
       dataArray.forEach(day => {
