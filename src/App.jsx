@@ -37,6 +37,8 @@ function App() {
   }, [meetingData]);
 
 
+  console.log("time slots:", timeslots);
+  
   return (
     <>
       {timeslots ? (
