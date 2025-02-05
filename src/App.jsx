@@ -23,12 +23,15 @@ function App() {
   useEffect(() => {
     if (meetingData) {
       const newTimeslots = [];
+      console.log("meeting data:", meetingData.data);
       meetingData?.data?.forEach(day => {
+        console.log("day", day);
         Object.keys(day?.appointments).forEach(unixTime => {
           if (day?.appointments[unixTime] === "available") {
             const startTime = new Date(unixTime * 1000);
             const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
             newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
+            console.log({id: parseInt(unixTime), startTime, endTime});
           }
         });
       });
@@ -38,7 +41,7 @@ function App() {
 
 
   console.log("time slots:", timeslots);
-  
+
   return (
     <>
       {timeslots ? (
