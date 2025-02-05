@@ -11,8 +11,8 @@ function App() {
     subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
 
     meetingData?.data?.forEach(day => {
-      Object.keys(day.appointments).forEach(unixTime => {
-        if(day.appointments[unixTime] === "available") {
+      Object.keys(day?.appointments).forEach(unixTime => {
+        if(day?.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
           const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
           timeslots.push({ id: unixTime, startTime, endTime });
