@@ -24,8 +24,8 @@ function App() {
     if (meetingData) {
       console.log("Meeting 🧨", meetingData);
       const newTimeslots = [];
-      console.log("meeting data:", meetingData.data);
-      meetingData?.data?.forEach(day => {
+      console.log("meeting data:", meetingData["data"]);
+      meetingData["data"]?.forEach(day => {
         console.log("day", day);
         Object.keys(day?.appointments).forEach(unixTime => {
           if (day?.appointments[unixTime] === "available") {
