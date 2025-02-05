@@ -11,6 +11,7 @@ function App() {
     const handleAppointmentsFound = (e) => {
       console.log("Event received:", e.detail);
       setMeetingData(e.detail);
+      console.log(meetingData);
     };
   
     subscribe("appointmentsFound", handleAppointmentsFound);
@@ -38,9 +39,6 @@ function App() {
       setTimeSlots(newTimeslots);
     }
   }, [meetingData]);
-
-
-  console.log("time slots:", timeslots);
 
   return (
     <>
