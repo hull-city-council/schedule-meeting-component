@@ -21,10 +21,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (meetingData.data) {
+    if (meetingData && meetingData.data !== "undefined" && meetingData.data !== null) {
       const newTimeslots = [];
-      const dataArray = meetingData.data;
-      dataArray.forEach(day => {
+      meetingData.data.forEach(day => {
         console.log("day", day);
         Object.keys(day?.appointments).forEach(unixTime => {
           if (day?.appointments[unixTime] === "available") {
