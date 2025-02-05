@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
 
-    meetingData.data.forEach(day => {
+    meetingData?.data?.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if(day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
