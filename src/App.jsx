@@ -4,26 +4,38 @@ import { subscribe, unsubscribe } from "./events";
 
 function App() {
 
-  const timeslots = [];
-  const [meetingData, setMeetingData] = useState();
+  const [ meetingData, setMeetingData] = useState();
+  const [ timeslots, setTimeSlots] = useState([]);
 
   useEffect(() => {
-    subscribe("appointmentsFound", (e) => setMeetingData(e.detail));
-    console.log("timeslots", timeslots);
-    console.log("meetingData", meetingData);
+    const handleAppointmentsFound = (e) => {
+      console.log("Event received:", e.detail);
+      setMeetingData(e.detail);
+    };
+  
+    subscribe("appointmentsFound", handleAppointmentsFound);
+  
+    return () => {
+      unsubscribe("appointmentsFound", handleAppointmentsFound);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (meetingData) {
+      const newTimeslots = [];
+      meetingData?.data?.forEach(day => {
+        Object.keys(day?.appointments).forEach(unixTime => {
+          if (day?.appointments[unixTime] === "available") {
+            const startTime = new Date(unixTime * 1000);
+            const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
+            newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
+          }
+        });
+      });
+      setTimeSlots(newTimeslots);
+    }
   }, [meetingData]);
 
-  if (meetingData) {
-    meetingData?.data?.forEach(day => {
-      Object.keys(day?.appointments).forEach(unixTime => {
-        if(day?.appointments[unixTime] === "available") {
-          const startTime = new Date(unixTime * 1000);
-          const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
-          timeslots.push({ id: parseInt(unixTime), startTime, endTime });
-        }
-      })
-    })
-  }
 
   return (
     <>
