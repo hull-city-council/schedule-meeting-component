@@ -25,7 +25,7 @@ function App() {
 
   return (
     <>
-      {meetingData.length() > 0 ? (
+      {meetingData ? (
         <ScheduleMeeting
           borderRadius={10}
           primaryColor="#03a9f4"
