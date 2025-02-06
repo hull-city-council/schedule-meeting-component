@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (meetingData && meetingData.data !== "undefined" && meetingData.data !== null) {
+    if (meetingData && typeof meetingData.data !== "undefined" && typeof meetingData.data !== null) {
       const newTimeslots = [];
       meetingData.data.forEach(day => {
         console.log("day", day);
