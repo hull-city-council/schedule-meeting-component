@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
-function App({sid}) {
+function App({ sid }) {
 
   const [timeslots, setTimeSlots] = useState([]);
-  
+
 
   useEffect((sid) => {
+    if (sid) {
       const avalableAppointments = suggestAppointment(sid);
       const newTimeslots = [];
       avalableAppointments.data.forEach(day => {
@@ -20,7 +21,7 @@ function App({sid}) {
         });
       });
       setTimeSlots(newTimeslots);
-
+    }
   }, [timeslots]);
 
   return (
