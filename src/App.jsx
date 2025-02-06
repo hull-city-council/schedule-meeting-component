@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import useSWR from "swr";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
@@ -7,12 +6,13 @@ import { suggestAppointment, createProvisional } from "./lookups";
 
 const ScheduleMeetingComponent = ({ sid }) => {
   const [timeslots, setTimeSlots] = useState([]);
+  const [data, setData] = useState();
   console.log(sid);
 
-
+useEffect(() => {
   if (sid) {
     async function fetchSuggestedAppointments() {
-      const data  = await suggestAppointment(sid);
+      setData(await suggestAppointment(sid));
       console.log("data", data);
       if (data) {
         console.log(data);
@@ -31,7 +31,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
     }
     fetchSuggestedAppointments();
   }
-
+}, [data])
 
   return (
     <>

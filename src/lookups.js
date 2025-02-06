@@ -1,6 +1,6 @@
 async function suggestAppointment(sid) {
   try {
-    await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
+    await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + "a75a80340265a2f33adf5953b27dfde1" + "&id=63e50558b8a6f", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -30,8 +30,7 @@ async function suggestAppointment(sid) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
-        return data;
+        return data.integration.transformed.rows_data[0].response;
       });
 
   } catch (error) {
