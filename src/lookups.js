@@ -1,5 +1,5 @@
 async function suggestAppointment(sid) {
-  await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
+  const response = await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
     method: "POST",
     mode: "cors",
     credentials: "include",

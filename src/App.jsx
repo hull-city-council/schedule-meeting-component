@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import useSWR from "swr";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
-const ScheduleMeetingComponent = ({ sid }) => {
 
+
+const ScheduleMeetingComponent = ({ sid }) => {
   const [timeslots, setTimeSlots] = useState([]);
   console.log(sid);
 
 
   if (sid) {
-    const getAvailibility = () => {
-      return useQuery({ queryKey: ['availability'], queryfn: suggestAppointment });
-    }
-    const { data, error, isLoading } = getAvailibility();
+    const { data, error, isLoading } = useSWR(suggestAppointment(sid));
     if (data) {
       console.log(data);
       const newTimeslots = [];
@@ -32,18 +30,18 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   return (
     <>
-      {timeslots.length > 0 ? (
-        <ScheduleMeeting
-          borderRadius={10}
-          primaryColor="#03a9f4"
-          eventDurationInMinutes={15}
-          availableTimeslots={timeslots}
-          onStartTimeSelect={createProvisional(startTimeEventEmit, sid)}
-          startTimeListStyle="scroll-list"
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+        {timeslots.length > 0 ? (
+          <ScheduleMeeting
+            borderRadius={10}
+            primaryColor="#03a9f4"
+            eventDurationInMinutes={15}
+            availableTimeslots={timeslots}
+            onStartTimeSelect={createProvisional(startTimeEventEmit, sid)}
+            startTimeListStyle="scroll-list"
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
     </>
   )
 }
