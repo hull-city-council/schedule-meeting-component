@@ -11,7 +11,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   if (sid) {
     const getAvailibility = () => {
-      return useQuery(['availability'], suggestAppointment);
+      return useQuery({ queryKey: ['availability'], queryfn: suggestAppointment });
     }
     const { data, error, isLoading } = getAvailibility();
     if (data) {
