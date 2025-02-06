@@ -12,7 +12,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   if (sid) {
     async function fetchSuggestedAppointments() {
-      const { data } = await suggestAppointment(sid);
+      const data  = await suggestAppointment(sid);
       console.log("data", data);
       if (data) {
         console.log(data);
