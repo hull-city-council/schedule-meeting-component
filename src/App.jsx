@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
-function App({ sid }) {
+const ScheduleMeetingComponent = ({ sid }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
 
+  console.log(sid);
 
-  useEffect((sid) => {
-    console.log(sid);
+  useEffect(() => {
     if (sid) {
       const avalableAppointments = suggestAppointment(sid);
       const newTimeslots = [];
@@ -23,7 +23,7 @@ function App({ sid }) {
       });
       setTimeSlots(newTimeslots);
     }
-  }, [timeslots]);
+  }, [timeslots, sid]);
 
   return (
     <>
@@ -43,4 +43,4 @@ function App({ sid }) {
   )
 }
 
-export default App
+export default ScheduleMeetingComponent
