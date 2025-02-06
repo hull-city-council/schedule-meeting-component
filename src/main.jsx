@@ -5,6 +5,6 @@ const scheduleMeeting = r2wc(App);
 
 customElements.define("schedule-meeting", scheduleMeeting, {
   props: {
-    cronofyData: "string"
+    sid: "string"
   }
 });

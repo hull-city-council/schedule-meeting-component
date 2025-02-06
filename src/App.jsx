@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
-function App() {
+function App({sid}) {
 
   const [timeslots, setTimeSlots] = useState([]);
-  sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0;
+  
 
   useEffect((sid) => {
       const avalableAppointments = suggestAppointment(sid);
