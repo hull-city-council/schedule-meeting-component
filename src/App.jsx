@@ -16,6 +16,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
           await Promise.all(appointments.map(async (appointment) => {
             await suggestAppointment(appointment);
             const newTimeslots = [];
+            console.log(avalableAppointments);
             avalableAppointments.data.forEach(day => {
               Object.keys(day?.appointments).forEach(unixTime => {
                 if (day?.appointments[unixTime] === "available") {
