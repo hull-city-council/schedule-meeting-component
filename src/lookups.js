@@ -27,7 +27,7 @@ async function suggestAppointment(sid) {
       })
     })
       .then(function (response) {
-        return response.data;
+        return response.json();
       });
 
   } catch (error) {

@@ -11,7 +11,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
 
     if (sid) {
-      const { data, error, isLoading } = useSWR(suggestAppointment(sid));
+      const { data, error, isLoading } = useSWR("availability", suggestAppointment(sid));
       console.log("data", data);
       if (data) {
         console.log(data);
