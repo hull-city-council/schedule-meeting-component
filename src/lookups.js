@@ -30,7 +30,8 @@ async function suggestAppointment(sid) {
         return response.json();
       })
       .then(function (data) {
-        return JSON.parse(data).integration.transformed.rows_data[0].response;
+        console.log(data);
+        return data;
       });
 
   } catch (error) {
