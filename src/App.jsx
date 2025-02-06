@@ -8,6 +8,7 @@ function App({ sid }) {
 
 
   useEffect((sid) => {
+    console.log(sid);
     if (sid) {
       const avalableAppointments = suggestAppointment(sid);
       const newTimeslots = [];
