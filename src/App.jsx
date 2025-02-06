@@ -9,11 +9,10 @@ const ScheduleMeetingComponent = ({ sid }) => {
   const [timeslots, setTimeSlots] = useState([]);
   console.log(sid);
 
-  useEffect((sid) => {
+
     if (sid) {
       const { data, error, isLoading } = useSWR(suggestAppointment(sid));
       console.log("data", data);
-      console.log("error", error);
       if (data) {
         console.log(data);
         const newTimeslots = [];
@@ -29,7 +28,6 @@ const ScheduleMeetingComponent = ({ sid }) => {
         setTimeSlots(newTimeslots);
       }
     }
-  }, [timeslots])
 
 
   return (

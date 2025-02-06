@@ -31,7 +31,7 @@ async function suggestAppointment(sid) {
       });
 
   } catch (error) {
-    console.error('Error:', error);
+    alert("Unable to fetch availbility");
   }
 }
 
