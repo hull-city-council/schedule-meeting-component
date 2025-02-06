@@ -11,6 +11,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
   useEffect(() => {
     if (sid) {
       const avalableAppointments = suggestAppointment(sid);
+      console.log(avalableAppointments);
       const newTimeslots = [];
       avalableAppointments.data.forEach(day => {
         Object.keys(day?.appointments).forEach(unixTime => {
