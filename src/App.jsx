@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useSWR from "swr";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
@@ -10,7 +11,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
 
     if (sid) {
-      const { data } = suggestAppointment(sid);
+      const { data, error, isLoading } = useSWR("availability", suggestAppointment(sid));
       console.log("data", data);
       if (data) {
         console.log(data);
