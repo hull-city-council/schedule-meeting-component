@@ -1,41 +1,34 @@
 async function suggestAppointment(sid) {
-  try {
-    await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
+  await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
+    method: "POST",
+    mode: "cors",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      formValues: {
+        Section1: {}
       },
-      body: JSON.stringify({
-        formValues: {
-          Section1: {}
-        },
-        tokens: {
-          calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
-          duration: 30,
-          start_time: "09:00",
-          end_time: "17:30",
-          granularity: 15,
-          event_location: "Telephone appointment",
-          event_ID: "FS684941349",
-          event_ID2: "FS684941349",
-          timezone: "Europe/London",
-          from: "2025-02-14",
-          to: "2025-02-24"
-        }
-      })
+      tokens: {
+        calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
+        duration: 30,
+        start_time: "09:00",
+        end_time: "17:30",
+        granularity: 15,
+        event_location: "Telephone appointment",
+        event_ID: "FS684941349",
+        event_ID2: "FS684941349",
+        timezone: "Europe/London",
+        from: "2025-02-14",
+        to: "2025-02-24"
+      }
     })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        return JSON.parse(data.integration.transformed.rows_data[0].response);
-      });
-
-  } catch (error) {
-    console.error('Error:', error);
+  });
+  if (!response.ok) {
+    alert("Error fetching availibility");
   }
+  return response.json();
 }
 
 async function createProvisional(startTimeEventEmit, sid) {

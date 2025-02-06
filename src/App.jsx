@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 
 const ScheduleMeetingComponent = ({ sid }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
-
   console.log(sid);
 
-  useEffect(() => {
-    if (sid) {
-      async function fetchAndProcessAppointments() {
-        const avalableAppointments = await suggestAppointment(sid);
-        console.log(avalableAppointments);
-        async function processAppointments(appointments) {
-          await Promise.all(appointments.map(async (appointment) => {
-            await suggestAppointment(appointment);
-            const newTimeslots = [];
-            avalableAppointments.data.forEach(day => {
-              Object.keys(day?.appointments).forEach(unixTime => {
-                if (day?.appointments[unixTime] === "available") {
-                  const startTime = new Date(unixTime * 1000);
-                  const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
-                  newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
-                }
-              });
-            });
-            setTimeSlots(newTimeslots);
-          }));
-        }
-        await processAppointments(avalableAppointments.data);
-      }
-      fetchAndProcessAppointments();
+
+  if (sid) {
+    const getAvailibility = () => {
+      return useQuery(['availability'], suggestAppointment);
     }
-  }, [timeslots, sid]);
+    const { data, error, isLoading } = getAvailibility();
+    if (data) {
+      console.log(data);
+      const newTimeslots = [];
+      data.integration.transformed.rows_data[0].response.data.forEach(day => {
+        Object.keys(day?.appointments).forEach(unixTime => {
+          if (day?.appointments[unixTime] === "available") {
+            const startTime = new Date(unixTime * 1000);
+            const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
+            newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
+          }
+        });
+      });
+      setTimeSlots(newTimeslots);
+    }
+  }
 
   return (
     <>
