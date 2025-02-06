@@ -10,8 +10,9 @@ const ScheduleMeetingComponent = ({ sid }) => {
   console.log(sid);
 
 
-    if (sid) {
-      const { data, error, isLoading } = useSWR("availability", suggestAppointment(sid));
+  if (sid) {
+    async function fetchSuggestedAppointments() {
+      const { data } = await suggestAppointment(sid);
       console.log("data", data);
       if (data) {
         console.log(data);
@@ -28,6 +29,8 @@ const ScheduleMeetingComponent = ({ sid }) => {
         setTimeSlots(newTimeslots);
       }
     }
+    fetchSuggestedAppointments();
+  }
 
 
   return (
