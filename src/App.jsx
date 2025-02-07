@@ -13,7 +13,6 @@ const ScheduleMeetingComponent = ({ sid }) => {
     if (sid) {
       async function fetchData() {
         const appointmentData = await suggestAppointment(sid);
-        console.log(appointmentData);
         setData(appointmentData);
       }
       fetchData();
@@ -41,6 +40,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
     <>
       {timeslots.length > 0 ? (
         <ScheduleMeeting
+          style="font-family: Arial, sans-serif;"
           borderRadius={10}
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}

@@ -40,9 +40,9 @@ async function suggestAppointment(sid) {
   }
 }
 
-async function createProvisional(startTimeEventEmit, sid) {
+async function createProvisional(sid) {
   try {
-    await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50580cdaf4", {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50580cdaf4", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -69,6 +69,7 @@ async function createProvisional(startTimeEventEmit, sid) {
       });
 
   } catch (error) {
+    alert("Unable to create appointment");
     console.error('Error:', error);
   }
   console.log(startTimeEventEmit.startTime);
