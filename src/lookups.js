@@ -56,8 +56,8 @@ async function createProvisional(e, sid) {
         tokens: {
           calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
           duration: 30,
-          start: e.startTimeEventEmit.startTime.toISOString().replace("T", " ").substring(0, 19),
-          start_time: e.startTimeEventEmit.startTime.toLocaleTimeString(),
+          start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
+          start_time: e.startTime.toLocaleTimeString(),
           event_location: "Telephone appointment",
           event_ID: "FS684941349",
           timezone: "Europe/London",
