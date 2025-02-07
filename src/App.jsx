@@ -68,8 +68,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 useEffect(() => {
   if (sid) {
     async function fetchSuggestedAppointments() {
-      const result = await suggestAppointment(sid);
-      setData(result);
+      suggestAppointment(sid);
       console.log("Updated data:", data);
       if (data) {
         processAppointmentDates();
