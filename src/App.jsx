@@ -12,9 +12,9 @@ const ScheduleMeetingComponent = ({ sid }) => {
   function processAppointmentDates(){
     console.log(data);
     const newTimeslots = [];
-    data.integration.transformed.rows_data[0].response.data.forEach(day => {
-      Object.keys(day?.appointments).forEach(unixTime => {
-        if (day?.appointments[unixTime] === "available") {
+    data.forEach(day => {
+      Object.keys(day.appointments).forEach(unixTime => {
+        if (day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
           const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
           newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
@@ -36,7 +36,7 @@ useEffect(() => {
     }
     fetchSuggestedAppointments();
   }
-}, [data])
+}, [sid])
 
   return (
     <>
