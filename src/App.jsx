@@ -6,7 +6,7 @@ import { createProvisional } from "./lookups";
 const ScheduleMeetingComponent = ({ sid }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   
   async function suggestAppointment(sid) {
     try {
