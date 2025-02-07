@@ -13,6 +13,14 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   // Fetch data only when sid changes
   useEffect(() => {
     if (props.sid && props.calendarid) {
+      console.log(          props.sid,
+        props.calendarid,
+        props.granularity,
+        props.duration,
+        props.startdate,
+        props.enddate,
+        props.starttime,
+        props.endtime);
       async function fetchData() {
         const appointmentData = await suggestAppointment(
           props.sid,
