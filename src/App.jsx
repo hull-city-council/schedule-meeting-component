@@ -40,8 +40,12 @@ const ScheduleMeetingComponent = ({ sid }) => {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
-          setData(data);
+          let responsePayload = data.integration.transformed.rows_data[0].response;
+          // If responsePayload is a JSON string, parse it.
+          if (typeof responsePayload === "string") {
+            responsePayload = JSON.parse(responsePayload);
+          }
+          setData(responsePayload.data);
         });
 
     } catch (error) {
@@ -51,14 +55,8 @@ const ScheduleMeetingComponent = ({ sid }) => {
   }
 
   function processAppointmentDates() {
-    console.log("process stage:", data.integration.transformed.rows_data[0].response);
-    const availability = data.integration.transformed.rows_data[0].response;
-    console.log("json parse 1", JSON.parse(availability.data));
-    console.log("json parse 2", JSON.parse(availability).data);
-    console.log("json parse 3", availability).data.json();
-    console.log("not json", availability.data);
     const newTimeslots = [];
-    JSON.parse(availability).data.forEach(day => {
+    data.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if (day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
