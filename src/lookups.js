@@ -1,4 +1,4 @@
-async function suggestAppointment(sid, calendarid) {
+async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
       method: "POST",
@@ -13,16 +13,13 @@ async function suggestAppointment(sid, calendarid) {
         },
         tokens: {
           calendar_id: calendarid,
-          duration: 30,
-          start_time: "09:00",
-          end_time: "17:30",
-          granularity: 15,
-          event_location: "Telephone appointment",
-          event_ID: "FS684941349",
-          event_ID2: "FS684941349",
+          duration: duration,
+          start_time: starttime,
+          end_time: endtime,
+          granularity: granularity,
           timezone: "Europe/London",
-          from: "2025-02-14",
-          to: "2025-02-24"
+          from: startdate,
+          to: enddate
         }
       })
     })

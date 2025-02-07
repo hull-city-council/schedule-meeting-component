@@ -14,7 +14,16 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   useEffect(() => {
     if (props.sid && props.calendarid) {
       async function fetchData() {
-        const appointmentData = await suggestAppointment(props.sid, props.calendarid);
+        const appointmentData = await suggestAppointment(
+          props.sid,
+          props.calendarid,
+          props.granularity,
+          props.duration,
+          props.startdate,
+          props.enddate,
+          props.starttime,
+          props.endtime
+        );
         setData(appointmentData);
       }
       fetchData();
@@ -48,7 +57,15 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
           availableTimeslots={timeslots}
-          onStartTimeSelect={(e) => createProvisional(e, props.sid, props.calendarid)}
+          onStartTimeSelect={(e) => createProvisional(
+            e, 
+            props.sid,
+            props.calendarid,
+            props.summary,
+            props.location,
+            props.description,
+            props.eventid
+          )}
           startTimeListStyle="scroll-list"
         />
       ) : (
