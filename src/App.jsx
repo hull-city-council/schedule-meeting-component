@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
+import Loader from "./Loader";
 // import rawStyles from 'react-schedule-meeting/dist/index.esm.js?raw';
 
 
@@ -13,7 +14,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   // Fetch data only when sid changes
   useEffect(() => {
     if (props.sid && props.calendarid) {
-      console.log(          props.sid,
+      console.log(props.sid,
         props.calendarid,
         props.granularity,
         props.duration,
@@ -46,7 +47,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
         Object.keys(day.appointments).forEach(unixTime => {
           if (day.appointments[unixTime] === "available") {
             const startTime = new Date(unixTime * 1000);
-            const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // 30 minutes duration
+            const endTime = new Date(startTime.getTime() + props.duration * 60 * 1000);
             newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
           }
         });
@@ -57,16 +58,28 @@ const ScheduleMeetingComponent = ({ ...props }) => {
 
   return (
     <>
-      {/* <style>{rawStyles}</style> */}
-      {timeslots.length > 0 ? (
+      {timeslots.length === 0 ? (
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "400px"
+        }}>
+          <Loader />
+          <div style={{ marginTop: "8px", fontFamily: "Arial, sans-serif" }}>
+            loading...
+          </div>
+        </div>
+      ) : (
         <ScheduleMeeting
           style="font-family: Arial, sans-serif;"
           borderRadius={10}
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
-          availableTimeslots={timeslots}
+          availableTimeslots={props.timeslots}
           onStartTimeSelect={(e) => createProvisional(
-            e, 
+            e,
             props.sid,
             props.calendarid,
             props.summary,
@@ -76,8 +89,6 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           )}
           startTimeListStyle="scroll-list"
         />
-      ) : (
-        <p>Loading...</p>
       )}
     </>
   )
