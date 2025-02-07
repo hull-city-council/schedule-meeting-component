@@ -8,29 +8,33 @@ const ScheduleMeetingComponent = ({ sid }) => {
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
 
-  function processAppointmentDates() {
-    const newTimeslots = [];
-    data.forEach(day => {
-      Object.keys(day.appointments).forEach(unixTime => {
-        if (day.appointments[unixTime] === "available") {
-          const startTime = new Date(unixTime * 1000);
-          const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // Assuming 30 minutes duration
-          newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
-        }
-      });
-    });
-    setTimeSlots(newTimeslots);
-  }
-  if (sid) {
-    setData(suggestAppointment(sid));
-  }
-
+  // Fetch data only when sid changes
   useEffect(() => {
-    console.log("Updated data:", data);
-    if (data) {
-      processAppointmentDates();
+    if (sid) {
+      async function fetchData() {
+        const appointmentData = await suggestAppointment(sid);
+        setData(appointmentData);
+      }
+      fetchData();
     }
-  }, [data])
+  }, [sid]);
+
+  // Process the fetched data when it updates
+  useEffect(() => {
+    if (data) {
+      const newTimeslots = [];
+      data.forEach(day => {
+        Object.keys(day.appointments).forEach(unixTime => {
+          if (day.appointments[unixTime] === "available") {
+            const startTime = new Date(unixTime * 1000);
+            const endTime = new Date(startTime.getTime() + 30 * 60 * 1000); // 30 minutes duration
+            newTimeslots.push({ id: parseInt(unixTime), startTime, endTime });
+          }
+        });
+      });
+      setTimeSlots(newTimeslots);
+    }
+  }, [data]);
 
   return (
     <>
