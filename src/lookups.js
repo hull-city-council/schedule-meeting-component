@@ -40,7 +40,7 @@ async function suggestAppointment(sid) {
   }
 }
 
-async function createProvisional(sid) {
+async function createProvisional(e, sid) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50580cdaf4", {
       method: "POST",
@@ -56,8 +56,8 @@ async function createProvisional(sid) {
         tokens: {
           calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
           duration: 30,
-          start: startTimeEventEmit.startTime.toISOString().replace("T", " ").substring(0, 19),
-          start_time: startTimeEventEmit.startTime.toLocaleTimeString(),
+          start: e.startTimeEventEmit.startTime.toISOString().replace("T", " ").substring(0, 19),
+          start_time: e.startTimeEventEmit.startTime.toLocaleTimeString(),
           event_location: "Telephone appointment",
           event_ID: "FS684941349",
           timezone: "Europe/London",
@@ -70,9 +70,10 @@ async function createProvisional(sid) {
 
   } catch (error) {
     alert("Unable to create appointment");
+    console.log(e);
     console.error('Error:', error);
   }
-  console.log(startTimeEventEmit.startTime);
+  console.log(e);
 }
 
 

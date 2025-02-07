@@ -45,7 +45,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
           availableTimeslots={timeslots}
-          onStartTimeSelect={() => createProvisional(sid)}
+          onStartTimeSelect={(e) => createProvisional(e, sid)}
           startTimeListStyle="scroll-list"
         />
       ) : (
