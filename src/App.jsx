@@ -7,7 +7,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
-  
+
   async function suggestAppointment(sid) {
     try {
       await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
@@ -43,15 +43,15 @@ const ScheduleMeetingComponent = ({ sid }) => {
           console.log(data);
           setData(data);
         });
-  
+
     } catch (error) {
       console.error(error);
       alert("Unable to fetch availbility");
     }
   }
 
-  function processAppointmentDates(){
-    console.log(data);
+  function processAppointmentDates() {
+    console.log("process stage:", data);
     const newTimeslots = [];
     data.integration.transformed.rows_data[0].response.data.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
@@ -64,19 +64,16 @@ const ScheduleMeetingComponent = ({ sid }) => {
     });
     setTimeSlots(newTimeslots);
   }
-
-useEffect(() => {
   if (sid) {
-    async function fetchSuggestedAppointments() {
-      suggestAppointment(sid);
-      console.log("Updated data:", data);
-      if (data) {
-        processAppointmentDates();
-      }
-    }
-    fetchSuggestedAppointments();
+    suggestAppointment(sid);
   }
-}, [data])
+
+  useEffect(() => {
+    console.log("Updated data:", data);
+    if (data) {
+      processAppointmentDates();
+    }
+  }, [data])
 
   return (
     <>
