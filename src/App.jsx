@@ -1,58 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
-import { createProvisional } from "./lookups";
+import { suggestAppointment, createProvisional } from "./lookups";
 
 
 const ScheduleMeetingComponent = ({ sid }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
-
-  async function suggestAppointment(sid) {
-    try {
-      await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          formValues: {
-            Section1: {}
-          },
-          tokens: {
-            calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
-            duration: 30,
-            start_time: "09:00",
-            end_time: "17:30",
-            granularity: 15,
-            event_location: "Telephone appointment",
-            event_ID: "FS684941349",
-            event_ID2: "FS684941349",
-            timezone: "Europe/London",
-            from: "2025-02-14",
-            to: "2025-02-24"
-          }
-        })
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          let responsePayload = data.integration.transformed.rows_data[0].response;
-          // If responsePayload is a JSON string, parse it.
-          if (typeof responsePayload === "string") {
-            responsePayload = JSON.parse(responsePayload);
-          }
-          setData(responsePayload.data);
-        });
-
-    } catch (error) {
-      console.error(error);
-      alert("Unable to fetch availbility");
-    }
-  }
 
   function processAppointmentDates() {
     const newTimeslots = [];
@@ -68,7 +22,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
     setTimeSlots(newTimeslots);
   }
   if (sid) {
-    suggestAppointment(sid);
+    setData(suggestAppointment(sid));
   }
 
   useEffect(() => {
@@ -86,7 +40,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
           availableTimeslots={timeslots}
-          onStartTimeSelect={createProvisional(startTimeEventEmit, sid)}
+          onStartTimeSelect={createProvisional(sid)}
           startTimeListStyle="scroll-list"
         />
       ) : (
