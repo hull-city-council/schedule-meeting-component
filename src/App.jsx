@@ -40,8 +40,8 @@ const ScheduleMeetingComponent = ({ sid }) => {
           return response.json();
         })
         .then(function (data) {
-          console.log(JSON.parse(data).integration.transformed.rows_data[0].response);
-          setData(data.integration.transformed.rows_data[0].response);
+          console.log(data);
+          setData(data);
         });
   
     } catch (error) {
@@ -53,7 +53,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
   function processAppointmentDates(){
     console.log(data);
     const newTimeslots = [];
-    data.forEach(day => {
+    data.integration.transformed.rows_data[0].response.data.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if (day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
