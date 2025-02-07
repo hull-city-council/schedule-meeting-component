@@ -1,4 +1,4 @@
-async function suggestAppointment(sid) {
+async function suggestAppointment(sid, calendarid) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
       method: "POST",
@@ -12,7 +12,7 @@ async function suggestAppointment(sid) {
           Section1: {}
         },
         tokens: {
-          calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
+          calendar_id: calendarid,
           duration: 30,
           start_time: "09:00",
           end_time: "17:30",
@@ -40,7 +40,7 @@ async function suggestAppointment(sid) {
   }
 }
 
-async function createProvisional(e, sid) {
+async function createProvisional(e, sid, calendarid) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50580cdaf4", {
       method: "POST",
@@ -54,7 +54,7 @@ async function createProvisional(e, sid) {
           Section1: {}
         },
         tokens: {
-          calendar_id: "cal_ZBLBiMdhsAC-SWx@_0fGt7JIj9-gZFyXKf7Lcnw",
+          calendar_id: calendarid,
           duration: 30,
           start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
           start_time: e.startTime.toLocaleTimeString(),

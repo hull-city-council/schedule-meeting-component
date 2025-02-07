@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
-import rawStyles from 'react-schedule-meeting/dist/index.esm.js?raw';
+// import rawStyles from 'react-schedule-meeting/dist/index.esm.js?raw';
 
 
 
-const ScheduleMeetingComponent = ({ sid }) => {
+const ScheduleMeetingComponent = ({ ...props }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
 
   // Fetch data only when sid changes
   useEffect(() => {
-    if (sid) {
+    if (props.sid && props.calendarid) {
       async function fetchData() {
-        const appointmentData = await suggestAppointment(sid);
+        const appointmentData = await suggestAppointment(props.sid, props.calendarid);
         setData(appointmentData);
       }
       fetchData();
     }
-  }, [sid]);
+  }, [props.calendarid]);
 
   // Process the fetched data when it updates
   useEffect(() => {
@@ -40,7 +40,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   return (
     <>
-      <style>{rawStyles}</style>
+      {/* <style>{rawStyles}</style> */}
       {timeslots.length > 0 ? (
         <ScheduleMeeting
           style="font-family: Arial, sans-serif;"
@@ -48,7 +48,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
           availableTimeslots={timeslots}
-          onStartTimeSelect={(e) => createProvisional(e, sid)}
+          onStartTimeSelect={(e) => createProvisional(e, props.sid, props.calendarid)}
           startTimeListStyle="scroll-list"
         />
       ) : (
