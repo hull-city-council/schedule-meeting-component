@@ -51,9 +51,10 @@ const ScheduleMeetingComponent = ({ sid }) => {
   }
 
   function processAppointmentDates() {
-    console.log("process stage:", data.integration.transformed.rows_data[0].response.data);
+    console.log("process stage:", data.integration.transformed.rows_data[0].response);
+    const availability = data.integration.transformed.rows_data[0].response.data;
     const newTimeslots = [];
-    JSON.parse(data).integration.transformed.rows_data[0].response.data.forEach(day => {
+    JSON.parse(availability).data.forEach(day => {
       Object.keys(day.appointments).forEach(unixTime => {
         if (day.appointments[unixTime] === "available") {
           const startTime = new Date(unixTime * 1000);
