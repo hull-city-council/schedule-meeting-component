@@ -14,8 +14,8 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
         tokens: {
           calendar_id: calendarid,
           duration: duration,
-          start_time: new Date.parseExact(starttime,'dd/MM/yyyy').toString('yyyy-MM-dd'),
-          end_time: new Date.parseExact(endtime,'dd/MM/yyyy').toString('yyyy-MM-dd'),
+          start_time: new Date.parseExact(starttime,'dd/MM/yyyy').toString('yyyy-MM-dd').toString(),
+          end_time: new Date.parseExact(endtime,'dd/MM/yyyy').toString('yyyy-MM-dd').toString(),
           granularity: granularity,
           timezone: "Europe/London",
           from: startdate,
