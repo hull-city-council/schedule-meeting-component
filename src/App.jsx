@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
+import rawStyles from 'react-schedule-meeting/dist/index.esm.js?raw';
+
 
 
 const ScheduleMeetingComponent = ({ sid }) => {
@@ -38,6 +40,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   return (
     <>
+      <style>{rawStyles}</style>
       {timeslots.length > 0 ? (
         <ScheduleMeeting
           style="font-family: Arial, sans-serif;"
