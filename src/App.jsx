@@ -13,6 +13,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
     if (sid) {
       async function fetchData() {
         const appointmentData = await suggestAppointment(sid);
+        console.log(appointmentData);
         setData(appointmentData);
       }
       fetchData();

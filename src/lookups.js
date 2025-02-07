@@ -1,6 +1,6 @@
 async function suggestAppointment(sid) {
   try {
-    await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -26,18 +26,14 @@ async function suggestAppointment(sid) {
         }
       })
     })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
+      .then(response => response.json())
+      .then(data => {
         let responsePayload = data.integration.transformed.rows_data[0].response;
-
         if (typeof responsePayload === "string") {
           responsePayload = JSON.parse(responsePayload);
         }
         return responsePayload.data;
       });
-
   } catch (error) {
     console.error(error);
     alert("Unable to fetch availbility");
