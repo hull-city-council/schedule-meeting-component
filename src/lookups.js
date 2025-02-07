@@ -14,12 +14,12 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
         tokens: {
           calendar_id: calendarid,
           duration: duration,
-          start_time: Date.parseExact(starttime,'dd/MM/yyyy').toString('yyyy-MM-dd'),
-          end_time: Date.parseExact(endtime,'dd/MM/yyyy').toString('yyyy-MM-dd'),
           granularity: granularity,
           timezone: "Europe/London",
-          from: startdate,
-          to: enddate
+          from: Date.parseExact(startdate,'dd/MM/yyyy').toString('yyyy-MM-dd'),
+          to: Date.parseExact(enddate,'dd/MM/yyyy').toString('yyyy-MM-dd'),
+          start_time:starttime,
+          end_time: endtime,
         }
       })
     })
