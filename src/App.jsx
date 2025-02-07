@@ -40,7 +40,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
           return response.json();
         })
         .then(function (data) {
-          console.log(data.integration.transformed.rows_data[0].response);
+          console.log(JSON.parse(data).integration.transformed.rows_data[0].response);
           setData(data.integration.transformed.rows_data[0].response);
         });
   
