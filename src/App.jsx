@@ -69,14 +69,15 @@ useEffect(() => {
   if (sid) {
     async function fetchSuggestedAppointments() {
       const result = await suggestAppointment(sid);
-      console.log("data", data);
+      setData(result);
+      console.log("Updated data:", data);
       if (data) {
         processAppointmentDates();
       }
     }
     fetchSuggestedAppointments();
   }
-}, [sid])
+}, [data])
 
   return (
     <>
