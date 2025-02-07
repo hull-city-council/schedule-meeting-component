@@ -52,7 +52,7 @@ const ScheduleMeetingComponent = ({ sid }) => {
 
   function processAppointmentDates() {
     console.log("process stage:", data.integration.transformed.rows_data[0].response);
-    const availability = data.integration.transformed.rows_data[0].response.data;
+    const availability = data.integration.transformed.rows_data[0].response;
     console.log("json parse 1", JSON.parse(availability.data));
     console.log("json parse 2", JSON.parse(availability).data);
     console.log("json parse 3", availability).data.json();
