@@ -66,13 +66,18 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           }
         })
       })
-        .then(function (response) {
-          selectedSlot = e.startTime;
-          return response.json();
+        .then(response => response.json())
+        .then(data => {
+          let responsePayload = data.integration.transformed.rows_data[0].response;
+          if (typeof responsePayload === "string") {
+            responsePayload = JSON.parse(responsePayload);
+          }
+          return responsePayload.data;
         });
 
+
     } catch (error) {
-      alert("Unable to create appointment");
+      alert("Unable to create appointment", JSON.parse(error?.messages[0]?.message));
       console.log(e);
       console.error('Error:', error);
     }

@@ -65,9 +65,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
         </div>
       ) : (
         <ScheduleMeeting
-          borderRadius={10}
-          primaryColor="#03a9f4"
-          eventDurationInMinutes={15}
+          eventDurationInMinutes={props.duration}
           availableTimeslots={timeslots}
           onStartTimeSelect={(e) => createProvisional(
             e,
