@@ -1,6 +1,6 @@
-import { useState } from "react";
+let selectedSlot = null;
 
-export async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
+async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
       method: "POST",
@@ -39,9 +39,7 @@ export async function suggestAppointment(sid, calendarid, granularity, duration,
   }
 }
 
-export async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
-  const [selectedSlot, setSelectedSlot] = useState();
-  
+async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
   if (!selectedSlot) {
     try {
       return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
@@ -69,7 +67,7 @@ export async function createProvisional(e, sid, calendarid, duration, summary, l
         })
       })
         .then(function (response) {
-          setSelectedSlot(e.startTime);
+          selectedSlot = e.startTime;
           return response.json();
         });
 
@@ -98,7 +96,7 @@ export async function createProvisional(e, sid, calendarid, duration, summary, l
         })
       })
         .then(function (response) {
-          setSelectedSlot(null);
+          selectedSlot = null;
           return createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id);
         });
 
@@ -109,3 +107,6 @@ export async function createProvisional(e, sid, calendarid, duration, summary, l
     }
   }
 }
+
+
+export { suggestAppointment, createProvisional };
