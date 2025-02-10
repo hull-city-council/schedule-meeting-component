@@ -9,6 +9,14 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
 
+  const availableTimeslots = [0, 1, 2, 3, 4, 5].map((id) => {
+    return {
+      id,
+      startTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(9, 0, 0, 0)),
+      endTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(17, 0, 0, 0)),
+    };
+  });
+
   // Fetch data only when sid or calendar id changes
   useEffect(() => {
     if (props.sid && props.calendarid) {
@@ -50,7 +58,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   return (
     <>
     <style>{globalStyles}</style>
-      {timeslots.length === 0 ? (
+      {timeslots.length > 0 ? (
         <div style={{
           display: "flex",
           flexDirection: "column",
@@ -69,7 +77,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           borderRadius={10}
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
-          availableTimeslots={timeslots}
+          availableTimeslots={availableTimeslots}
           onStartTimeSelect={(e) => createProvisional(
             e,
             props.sid,

@@ -84,7 +84,20 @@ body:not(.navigation-with-keyboard) :not(input):focus{outline:0;}
 
 .go618359429{height:100%;flex:1;width:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;}
 .go3074214942{margin:0;opacity:0.5;margin-bottom:24px;font-size:18px;color:rgba(var(--text-color-rgb), 1);}
-.go4199485258{font-size:90%;font-weight:700;padding:3px 10px;border-radius:var(--border-radius);border:1px solid rgba(var(--background-color-contrast-rgb), 0.5);}
+.go4199485258{font-size:90%;font-weight:700;padding:16px 10px;border-radius:var(--border-radius);border:1px solid rgba(var(--background-color-contrast-rgb), 0.5);}
+
+.go2225988090{position:relative;display:flex;flex-direction:column;overflow-y:scroll;padding-bottom:24px;padding-top:16px;}
+.go2876234792{display:flex;width:100%;align-items:center;}
+.go1318713726{padding:16px;border:none;color:rgba(var(--text-color-rgb), 1);background-color:rgba(0,0,0,0);border-radius:var(--border-radius);outline:none;width:100%;cursor:pointer;font-size:16px;opacity:1;}
+.go1318713726:hover{opacity:0.8;background-color:rgba(var(--background-color-contrast-rgb), 0.06);}
+.go3749871802{flex-shrink:0;flex:1;padding:0.5px;margin:0px 8px;position:relative;background:rgba(var(--background-color-contrast-rgb), 0.05);}
+
+.go2876234792{display:flex;width:100%;align-items:center;}
+.go2556357651{font-weight:bold;padding:16px;border:none;color:rgba(var(--primary-color-contrast-rgb), 1);background-color:rgba(var(--primary-color-rgb), 1);border-radius:var(--border-radius);outline:none;width:100%;cursor:pointer;font-size:16px;opacity:1;}
+.go2556357651:hover{opacity:0.8;background-color:rgba(var(--primary-color-rgb), 1);}
+.go3964545171{padding:8px 24px;border:none;background-color:rgb(0, 0, 0, 0);border-radius:var(--border-radius);outline:none;margin-left:8px;cursor:pointer;display:flex;justify-content:center;align-items:center;font-size:16px;height:100%;color:rgba(var(--text-color-rgb), 1);}
+.go3964545171:hover{background-color:rgba(var(--background-color-contrast-rgb), 0.06);}
+
 `;
 
 export { globalStyles }; 
