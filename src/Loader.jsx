@@ -1,9 +1,9 @@
 import React from 'react';
 
 const loaderStyle = {
-  width: "60px",
+  width: "80px",
   aspectRatio: 2,
-  "--_g": "no-repeat radial-gradient(circle closest-side, #000 90%, #0000)",
+  "--_g": "no-repeat radial-gradient(circle closest-side, #eee 90%, #0000)",
   background: "var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%",
   backgroundSize: "calc(100%/3) 50%",
   animation: "l3 1s infinite linear"

@@ -1,6 +1,6 @@
-async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime) {
+async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
-    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50558b8a6f", {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -37,9 +37,9 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
   }
 }
 
-async function createProvisional(e, sid, calendarid) {
+async function createProvisional(e, sid, calendarid, book_time_lookup_id) {
   try {
-    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=63e50580cdaf4", {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
       method: "POST",
       mode: "cors",
       credentials: "include",
