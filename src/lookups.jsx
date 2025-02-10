@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-const [selectedSlot, setSelectedSlot] = useState();
-
-async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
+export async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
       method: "POST",
@@ -41,7 +39,9 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
   }
 }
 
-async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
+export async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
+  const [selectedSlot, setSelectedSlot] = useState();
+  
   if (!selectedSlot) {
     try {
       return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
@@ -109,6 +109,3 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
     }
   }
 }
-
-
-export { suggestAppointment, createProvisional };
