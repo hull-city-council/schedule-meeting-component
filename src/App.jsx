@@ -24,7 +24,6 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           props.endtime,
           props.fetch_times_lookup_id,
         );
-        console.log("appointmentData", appointmentData);
         setData(appointmentData);
       }
       fetchData();
@@ -34,7 +33,6 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   // Process the fetched data when it updates
   useEffect(() => {
     if (data) {
-      console.log("data", data);
       const newTimeslots = [];
       data.forEach(day => {
         Object.keys(day.appointments).forEach(unixTime => {
@@ -71,7 +69,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           borderRadius={10}
           primaryColor="#03a9f4"
           eventDurationInMinutes={15}
-          availableTimeslots={props.timeslots}
+          availableTimeslots={timeslots}
           onStartTimeSelect={(e) => createProvisional(
             e,
             props.sid,
