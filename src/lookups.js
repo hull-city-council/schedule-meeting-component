@@ -60,7 +60,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
             start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
             start_time: e.startTime.toLocaleTimeString(),
             event_location: location,
-            eventID: event_id,
+            event_ID: event_id,
             timezone: "Europe/London",
           }
         })
