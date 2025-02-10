@@ -77,7 +77,6 @@ const ScheduleMeetingComponent = ({ ...props }) => {
             props.description,
             props.event_id,
             props.book_time_lookup_id,
-            props.cancel_time_lookup_id,
           )}
           startTimeListStyle="scroll-list"
         />

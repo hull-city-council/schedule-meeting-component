@@ -1,5 +1,3 @@
-let selectedSlot = null;
-
 async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
@@ -39,77 +37,47 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
   }
 }
 
-async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
-  if (!selectedSlot) {
-    try {
-      return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
+async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id) {
+  try {
+    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
+      method: "POST",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        formValues: {
+          Section1: {}
         },
-        body: JSON.stringify({
-          formValues: {
-            Section1: {}
-          },
-          tokens: {
-            calendar_id: calendarid,
-            duration: duration,
-            summary: summary,
-            description: description,
-            start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
-            start_time: e.startTime.toLocaleTimeString(),
-            event_location: location,
-            event_ID: event_id,
-            timezone: "Europe/London",
-          }
-        })
+        tokens: {
+          calendar_id: calendarid,
+          duration: duration,
+          summary: summary,
+          description: description,
+          start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
+          start_time: e.startTime.toLocaleTimeString(),
+          event_location: location,
+          event_ID: event_id,
+          timezone: "Europe/London",
+        }
       })
-        .then(response => response.json())
-        .then(data => {
-          let responsePayload = data.integration.transformed.rows_data[0].response;
-          if (typeof responsePayload === "string") {
-            responsePayload = JSON.parse(responsePayload);
-          }
-          return responsePayload.data;
-        });
+    })
+      .then(response => response.json())
+      .then(data => {
+        let responsePayload = data.integration.transformed.rows_data[0].response;
+        if (typeof responsePayload === "string") {
+          responsePayload = JSON.parse(responsePayload);
+        }
+        $("input#selectedDate").val(e.startTime.toISOString()).trigger("input");
+        return responsePayload.data;
+      });
 
 
-    } catch (error) {
-      alert("Unable to create appointment", JSON.parse(error?.messages[0]?.message));
-      console.log(e);
-      console.error('Error:', error);
-    }
-  } else {
-    try {
-      return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + cancel_time_lookup_id, {
-        method: "POST",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          formValues: {
-            Section1: {}
-          },
-          tokens: {
-            eventID: event_id,
-            timezone: "Europe/London",
-          }
-        })
-      })
-        .then(function (response) {
-          selectedSlot = null;
-          return createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id);
-        });
-
-    } catch (error) {
-      alert("Unable to cancel provisional appointment");
-      console.log(e);
-      console.error('Error:', error);
-    }
+  } catch (error) {
+    alert("Unable to create appointment", JSON.parse(error?.messages[0]?.message));
+    console.log(e);
+    console.error('Error:', error);
   }
 }
 
