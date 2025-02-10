@@ -75,7 +75,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
 
 
   } catch (error) {
-    alert("Unable to create appointment", JSON.parse(error?.messages[0]?.message));
+    alert("Unable to create appointment", JSON.parse(error?.messages?.message));
     console.log(e);
     console.error('Error:', error);
   }
