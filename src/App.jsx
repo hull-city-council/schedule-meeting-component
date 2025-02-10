@@ -3,9 +3,6 @@ import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 import Loader from "./Loader";
 import { globalStyles } from "./assets/styles";
-// import rawStyles from 'react-schedule-meeting/dist/index.esm.js?raw';
-
-
 
 const ScheduleMeetingComponent = ({ ...props }) => {
 
@@ -27,6 +24,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           props.endtime,
           props.fetch_times_lookup_id,
         );
+        console.log("appointmentData", appointmentData);
         setData(appointmentData);
       }
       fetchData();
@@ -36,6 +34,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   // Process the fetched data when it updates
   useEffect(() => {
     if (data) {
+      console.log("data", data);
       const newTimeslots = [];
       data.forEach(day => {
         Object.keys(day.appointments).forEach(unixTime => {
