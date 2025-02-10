@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+const [selectedSlot, setSelectedSlot] = useState();
+
 async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
@@ -16,9 +20,9 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
           duration: duration,
           granularity: granularity,
           timezone: "Europe/London",
-          from: Date.parseExact(startdate,'dd/MM/yyyy').toString('yyyy-MM-dd'),
-          to: Date.parseExact(enddate,'dd/MM/yyyy').toString('yyyy-MM-dd'),
-          start_time:starttime,
+          from: Date.parseExact(startdate, 'dd/MM/yyyy').toString('yyyy-MM-dd'),
+          to: Date.parseExact(enddate, 'dd/MM/yyyy').toString('yyyy-MM-dd'),
+          start_time: starttime,
           end_time: endtime,
         }
       })
@@ -37,40 +41,73 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
   }
 }
 
-async function createProvisional(e, sid, calendarid, book_time_lookup_id) {
-  try {
-    return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        formValues: {
-          Section1: {}
+async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id) {
+  if (!selectedSlot) {
+    try {
+      return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
         },
-        tokens: {
-          calendar_id: calendarid,
-          duration: 30,
-          start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
-          start_time: e.startTime.toLocaleTimeString(),
-          event_location: "Telephone appointment",
-          event_ID: "FS684941349",
-          timezone: "Europe/London",
-        }
+        body: JSON.stringify({
+          formValues: {
+            Section1: {}
+          },
+          tokens: {
+            calendar_id: calendarid,
+            duration: duration,
+            summary: summary,
+            description: description,
+            start: e.startTime.toISOString().replace("T", " ").substring(0, 19),
+            start_time: e.startTime.toLocaleTimeString(),
+            event_location: location,
+            eventID: event_id,
+            timezone: "Europe/London",
+          }
+        })
       })
-    })
-      .then(function (response) {
-        return response.json();
-      });
+        .then(function (response) {
+          setSelectedSlot(e.startTime);
+          return response.json();
+        });
 
-  } catch (error) {
-    alert("Unable to create appointment");
-    console.log(e);
-    console.error('Error:', error);
+    } catch (error) {
+      alert("Unable to create appointment");
+      console.log(e);
+      console.error('Error:', error);
+    }
+  } else {
+    try {
+      return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + cancel_time_lookup_id, {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          formValues: {
+            Section1: {}
+          },
+          tokens: {
+            eventID: event_id,
+            timezone: "Europe/London",
+          }
+        })
+      })
+        .then(function (response) {
+          setSelectedSlot(null);
+          return createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, cancel_time_lookup_id);
+        });
+
+    } catch (error) {
+      alert("Unable to cancel provisional appointment");
+      console.log(e);
+      console.error('Error:', error);
+    }
   }
-  console.log(e);
 }
 
 

@@ -11,24 +11,24 @@ const ScheduleMeetingComponent = ({ ...props }) => {
 
   // Fetch data only when sid or calendar id changes
   useEffect(() => {
-    if (props.sid && props.calendarid) {
+    if (props.sid && props.calendar_id) {
       async function fetchData() {
         const appointmentData = await suggestAppointment(
           props.sid,
-          props.calendarid,
+          props.calendar_id,
           props.granularity,
           props.duration,
-          props.startdate,
-          props.enddate,
-          props.starttime,
-          props.endtime,
+          props.start_date,
+          props.end_date,
+          props.start_time,
+          props.end_time,
           props.fetch_times_lookup_id,
         );
         setData(appointmentData);
       }
       fetchData();
     }
-  }, [props.calendarid]);
+  }, [props.calendar_id]);
 
   // Process the fetched data when it updates
   useEffect(() => {
@@ -72,12 +72,14 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           onStartTimeSelect={(e) => createProvisional(
             e,
             props.sid,
-            props.calendarid,
+            props.calendar_id,
+            props.duration,
             props.summary,
             props.location,
             props.description,
-            props.eventid,
+            props.event_id,
             props.book_time_lookup_id,
+            props.cancel_time_lookup_id,
           )}
           startTimeListStyle="scroll-list"
         />
