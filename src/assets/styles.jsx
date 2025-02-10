@@ -42,7 +42,7 @@ body:not(.navigation-with-keyboard) :not(input):focus{outline:0;}
 .go4247048326 .react-calendar__month-view__weekdays{text-align:center;text-transform:uppercase;font-weight:bold;font-size:0.75em;}
 .go4247048326 .react-calendar__month-view__weekdays__weekday{padding:0.5em;}
 .go4247048326 .react-calendar__tile{max-width:100%;text-align:center;padding:0.75em 0.5em;background:none;}
-.go4247048326 .day-tile{width:60px;height:60px;color:rgba(var(--text-color-rgb), .9);padding:5px;position:relative;z-index:1;}
+.go4247048326 .day-tile{width:60px;height:60px;padding:5px;position:relative;z-index:1;}
 @media (max-width: 768px){
 .go4247048326 .day-tile{height:45px;}
 }
@@ -52,7 +52,6 @@ body:not(.navigation-with-keyboard) :not(input):focus{outline:0;}
 .go4247048326 .active-day-tile{color:rgba(var(--primary-color-text-shade-rgb), 1);}
 .go4247048326 .active-day-tile::after{background:rgba(var(--primary-color-rgb), 0.222);border-radius:var(--border-radius);}
 .go4247048326 .active-day-tile:hover{opacity:0.5;}
-.go4247048326 .react-calendar__tile:disabled.day-tile{background:rgba(var(--background-color-rgb), 1);}
 .go4247048326 .react-calendar__tile--now.day-tile{background:rgba(var(--background-color-rgb), 1);}
 .go4247048326 .react-calendar__tile--now.day-tile::after{border-radius:var(--border-radius);background:rgba(var(--primary-color-rgb), 0.111);}
 .go4247048326 .react-calendar__tile--now:hover.day-tile{background:rgba(var(--background-color-rgb), 1);}
