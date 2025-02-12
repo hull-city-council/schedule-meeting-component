@@ -69,7 +69,12 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         if (typeof responsePayload === "string") {
           responsePayload = JSON.parse(responsePayload);
         }
-        $("input#selectedDate").val(e.startTime.toISOString()).trigger("input");
+        if ($("input#selectedDate")) {
+          $("input#selectedDate").val(e.startTime.toISOString()).trigger("input");
+        }
+        if ($("input#returnedEventId")) {
+          $("input#returnedEventId").val(responsePayload.id).trigger("input");
+        }
         return responsePayload.data;
       });
 
@@ -80,6 +85,5 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
     console.error('Error:', error);
   }
 }
-
 
 export { suggestAppointment, createProvisional };

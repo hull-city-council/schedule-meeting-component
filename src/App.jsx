@@ -8,6 +8,26 @@ const ScheduleMeetingComponent = ({ ...props }) => {
 
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const createProvisionalWrapper = async (e) => {
+    setIsLoading(true);
+    try {
+      await createProvisional(
+        e,
+        props.sid,
+        props.calendar_id,
+        props.duration,
+        props.summary,
+        props.location,
+        props.description,
+        props.event_id,
+        props.book_time_lookup_id,
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Fetch data only when sid or calendar id changes
   useEffect(() => {
@@ -49,7 +69,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
 
   return (
     <>
-    <style>{globalStyles}</style>
+      <style>{globalStyles}</style>
       {timeslots.length === 0 ? (
         <div style={{
           display: "flex",
@@ -64,22 +84,15 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           </div>
         </div>
       ) : (
-        <ScheduleMeeting
-          eventDurationInMinutes={props.duration}
-          availableTimeslots={timeslots}
-          onStartTimeSelect={(e) => createProvisional(
-            e,
-            props.sid,
-            props.calendar_id,
-            props.duration,
-            props.summary,
-            props.location,
-            props.description,
-            props.event_id,
-            props.book_time_lookup_id,
-          )}
-          startTimeListStyle="scroll-list"
-        />
+        <div>
+          {isLoading && <div>Loading...</div>}
+          <ScheduleMeeting
+            eventDurationInMinutes={props.duration}
+            availableTimeslots={timeslots}
+            onStartTimeSelect={createProvisionalWrapper}
+            startTimeListStyle="scroll-list"
+          />
+        </div>
       )}
     </>
   )
