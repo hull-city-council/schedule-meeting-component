@@ -80,7 +80,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
         }}>
           <Loader />
           <div style={{ marginTop: "8px" }}>
-            loading...
+            Confirming appointment, please wait...
           </div>
         </div>
       ) : (
