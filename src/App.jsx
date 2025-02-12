@@ -79,13 +79,32 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           height: "400px"
         }}>
           <Loader />
-          <div style={{ marginTop: "8px", fontFamily: "Arial, sans-serif" }}>
+          <div style={{ marginTop: "8px" }}>
             loading...
           </div>
         </div>
       ) : (
-        <div>
-          {isLoading && <div>Loading...</div>}
+        <div style={{ position: "relative" }}>
+          {isLoading && (
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(255, 255, 255, 0.8)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 10,
+            }}>
+              <Loader />
+              <div style={{ marginTop: "8px" }}>
+                loading...
+              </div>
+            </div>
+          )}
           <ScheduleMeeting
             eventDurationInMinutes={props.duration}
             availableTimeslots={timeslots}
