@@ -9,6 +9,8 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  
+  console.log("sid debug", typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0);
 
   const createProvisionalWrapper = async (e) => {
     setIsLoading(true);
