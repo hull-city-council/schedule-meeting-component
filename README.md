@@ -9,15 +9,10 @@ It is designed to be a drop-in replacement for the Granicus solution. However, y
 
 - Add the script to your form as a html field
 ```html
-<script>
-sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0;
-document.querySelector("schedule-meeting").setAttribute("sid", sid);
-</script>
 <script src="https://hull-city-council.github.io/schedule-meeting-component/dist/assets/main.js" defer>
 </script>
 
 <schedule-meeting 
-sid="" 
 calendar_id="{calendar_id}"
 summary="{summary}"
 location="{event_location}"
