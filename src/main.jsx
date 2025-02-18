@@ -17,8 +17,7 @@ const scheduleMeeting = r2wc(ScheduleMeetingComponent, {
     event_id: "string",
     fetch_times_lookup_id: "string",
     book_time_lookup_id: "string",
-    cancel_time_lookup_id: "string",
-    sid: "string"
+    cancel_time_lookup_id: "string"
   }
 });
 

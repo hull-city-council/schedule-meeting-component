@@ -9,15 +9,14 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  
-  console.log("sid debug", typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0);
+  const sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0;
 
   const createProvisionalWrapper = async (e) => {
     setIsLoading(true);
     try {
       await createProvisional(
         e,
-        props.sid,
+        sid,
         props.calendar_id,
         props.duration,
         props.summary,
@@ -33,10 +32,10 @@ const ScheduleMeetingComponent = ({ ...props }) => {
 
   // Fetch data only when sid or calendar id changes
   useEffect(() => {
-    if (props.sid && props.calendar_id) {
+    if (sid && props.calendar_id) {
       async function fetchData() {
         const appointmentData = await suggestAppointment(
-          props.sid,
+          sid,
           props.calendar_id,
           props.granularity,
           props.duration,
