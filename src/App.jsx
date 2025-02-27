@@ -11,6 +11,14 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
   const sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0;
 
+  const availableTimeslots = [0, 1, 2, 3, 4, 5].map((id) => {
+    return {
+      id,
+      startTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(9, 0, 0, 0)),
+      endTime: new Date(new Date(new Date().setDate(new Date().getDate() + id)).setHours(17, 0, 0, 0)),
+    };
+  }).slice(0);
+
   const createProvisionalWrapper = async (e) => {
     setIsLoading(true);
     try {
@@ -71,7 +79,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   return (
     <>
       <style>{globalStyles}</style>
-      {timeslots.length === 0 ? (
+      {timeslots.length > 0 ? (
         <div style={{
           display: "flex",
           flexDirection: "column",
@@ -108,7 +116,8 @@ const ScheduleMeetingComponent = ({ ...props }) => {
           )}
           <ScheduleMeeting
             eventDurationInMinutes={props.duration}
-            availableTimeslots={timeslots}
+            availableTimeslots={availableTimeslots}
+            format_startTimeFormatString="a"
             onStartTimeSelect={createProvisionalWrapper}
             startTimeListStyle="scroll-list"
           />
