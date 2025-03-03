@@ -57,7 +57,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           duration: duration,
           summary: summary,
           description: description,
-          start: formatISO(e.startTime),
+          start:  formatISO(e.startTime).replace("T", " ").substring(0, 19),
           start_time: e.startTime.toLocaleTimeString(),
           event_location: location,
           event_ID: event_id,
