@@ -1,3 +1,5 @@
+import { formatISO } from "date-fns";
+
 async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + fetch_times_lookup_id, {
@@ -55,7 +57,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           duration: duration,
           summary: summary,
           description: description,
-          start: e.startTime.toISOString(),
+          start: formatISO(e.startTime),
           start_time: e.startTime.toLocaleTimeString(),
           event_location: location,
           event_ID: event_id,
