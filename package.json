@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@r2wc/react-to-web-component": "^2.0.4",
+    "date-fns": "^4.1.0",
     "i": "^0.3.7",
     "npm": "^11.1.0",
     "react": "^18.3.1",

@@ -3,6 +3,7 @@ import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 import Loader from "./Loader";
 import { globalStyles } from "./assets/styles";
+import { enGB } from "date-fns/locale";
 
 const ScheduleMeetingComponent = ({ ...props }) => {
 
@@ -111,6 +112,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
             availableTimeslots={timeslots}
             onStartTimeSelect={createProvisionalWrapper}
             startTimeListStyle="scroll-list"
+            locale={enGB}
           />
         </div>
       )}

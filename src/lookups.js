@@ -68,8 +68,6 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         let responsePayload = data.integration.transformed.rows_data[0].response;
         if (typeof responsePayload === "string") {
           responsePayload = JSON.parse(responsePayload);
-        } else {
-          console.error("Unable to process response, as it was not a string.");
         }
         if ($("input#selectedDate")) {
           $("input#selectedDate").val(e.startTime.toISOString()).trigger("input");
