@@ -72,7 +72,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           responsePayload = JSON.parse(responsePayload);
         }
         if ($("input#selectedDate")) {
-          $("input#selectedDate").val(e.startTime.toISOString()).trigger("input");
+          $("input#selectedDate").val(formatISO(e.startTime)).trigger("input");
         }
         if ($("input#returnedEventId")) {
           $("input#returnedEventId").val(responsePayload.id).trigger("input");
