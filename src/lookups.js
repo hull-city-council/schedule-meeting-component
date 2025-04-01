@@ -1,4 +1,4 @@
-import { formatISO } from "date-fns";
+import { formatISO, format  } from "date-fns";
 
 async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
@@ -76,6 +76,9 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         }
         if ($("input#returnedEventId")) {
           $("input#returnedEventId").val(responsePayload.id).trigger("input");
+        }
+        if ($("input#friendlyAppointmentDate")) {
+          $("input#friendlyAppointmentDate").val(format(e.startTime, "EEEE dd MMMM yyyy 'at' hh:mmaaa")).trigger("input");
         }
         return responsePayload.data;
       });
