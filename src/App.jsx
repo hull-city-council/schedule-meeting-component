@@ -10,7 +10,27 @@ const ScheduleMeetingComponent = ({ ...props }) => {
   const [timeslots, setTimeSlots] = useState([]);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const sid = typeof FS !== "undefined" && FS !== null ? (ref = FS.Auth) != null ? ref.session['auth-session'] : void 0 : void 0;
+  const [sid, setSid] = useState();
+
+  useEffect(() => {
+    const readSid = () => globalThis.FS?.Auth?.session?.['auth-session'];
+    const initialSid = readSid();
+
+    if (initialSid) {
+      setSid(initialSid);
+      return;
+    }
+
+    const intervalId = setInterval(() => {
+      const loadedSid = readSid();
+      if (loadedSid) {
+        setSid(loadedSid);
+        clearInterval(intervalId);
+      }
+    }, 50);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const createProvisionalWrapper = async (e) => {
     setIsLoading(true);
@@ -50,7 +70,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
       }
       fetchData();
     }
-  }, [props.calendar_id]);
+  }, [sid, props.calendar_id]);
 
   // Process the fetched data when it updates
   useEffect(() => {
