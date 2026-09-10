@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ScheduleMeeting } from "react-schedule-meeting";
 import { suggestAppointment, createProvisional } from "./lookups";
 import Loader from "./Loader";
@@ -45,6 +45,7 @@ const ScheduleMeetingComponent = ({ ...props }) => {
         props.description,
         props.event_id,
         props.book_time_lookup_id,
+        props.adjust_for_bst,
       );
     } finally {
       setIsLoading(false);

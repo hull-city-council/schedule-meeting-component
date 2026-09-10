@@ -39,8 +39,43 @@ async function suggestAppointment(sid, calendarid, granularity, duration, startd
   }
 }
 
-async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id) {
+function getTimeZoneOffsetMinutes(date, timeZone) {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date).reduce((values, part) => {
+    if (part.type !== 'literal') values[part.type] = part.value;
+    return values;
+  }, {});
+
+  const timeZoneDate = Date.UTC(
+    Number(parts.year),
+    Number(parts.month) - 1,
+    Number(parts.day),
+    Number(parts.hour),
+    Number(parts.minute),
+    Number(parts.second),
+  );
+
+  return (timeZoneDate - date.getTime()) / 60000;
+}
+
+function isBritishSummerTime(date) {
+  return getTimeZoneOffsetMinutes(date, 'Europe/London') > 0;
+}
+
+async function createProvisional(e, sid, calendarid, duration, summary, location, description, event_id, book_time_lookup_id, adjustForBst) {
   try {
+    const appointmentTime = adjustForBst && isBritishSummerTime(e.startTime)
+      ? new Date(e.startTime.getTime() - 60 * 60 * 1000)
+      : e.startTime;
+
     return await fetch("/apibroker/?api=RunLookup&app_name=AchieveForms&sid=" + sid + "&id=" + book_time_lookup_id, {
       method: "POST",
       mode: "cors",
@@ -57,8 +92,8 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           duration: duration,
           summary: summary,
           description: description,
-          start:  formatISO(e.startTime).replace("T", " ").substring(0, 19),
-          start_time: e.startTime.toLocaleTimeString(),
+          start:  formatISO(appointmentTime).replace("T", " ").substring(0, 19),
+          start_time: appointmentTime.toLocaleTimeString(),
           event_location: location,
           event_ID: event_id,
           timezone: "Europe/London",
