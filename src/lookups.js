@@ -109,8 +109,10 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         if ($("input#selectedDate")) {
           $("input#selectedDate").val(formatISO(e.startTime)).trigger("input");
         }
+        // Granicus API does not return an id field, so use the event_id prop as fallback
+        const eventId = responsePayload?.id ?? event_id ?? null;
         if ($("input#returnedEventId")) {
-          $("input#returnedEventId").val(responsePayload.id).trigger("input");
+          $("input#returnedEventId").val(eventId).trigger("input");
         }
         if ($("input#friendlyAppointmentDate")) {
           $("input#friendlyAppointmentDate").val(format(e.startTime, "EEEE dd MMMM yyyy 'at' hh:mmaaa")).trigger("input");
@@ -118,7 +120,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         if ($("input#appointmentDate")) {
           $("input#appointmentDate").val(format(e.startTime, "dd/MM/yyyy")).trigger("input");
         }
-        return responsePayload.data;
+        return responsePayload;
       });
 
 
@@ -126,6 +128,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
     alert("Unable to create appointment, try selecting another time.");
     console.log(e);
     console.error("Error:", error);
+    throw error;
   }
 }
 

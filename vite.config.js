@@ -5,5 +5,11 @@ export default defineConfig({
   plugins: [
     react(),
   ],
-
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: "assets/main.js",
+      },
+    },
+  },
 })
