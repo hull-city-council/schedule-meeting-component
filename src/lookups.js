@@ -116,7 +116,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           $("input#friendlyAppointmentDate").val(format(e.startTime, "EEEE dd MMMM yyyy 'at' hh:mmaaa")).trigger("input");
         }
         if ($("input#appointmentDate")) {
-          $("input#appointmentDate").val(format(e.startTime, "yyyy-MM-dd")).trigger("input");
+          $("input#appointmentDate").val(format(e.startTime, "dd/MM/yyyy")).trigger("input");
         }
         return responsePayload.data;
       });
