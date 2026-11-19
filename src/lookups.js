@@ -1,4 +1,4 @@
-import { formatISO, format  } from "date-fns";
+import { formatISO, format } from "date-fns";
 
 async function suggestAppointment(sid, calendarid, granularity, duration, startdate, enddate, starttime, endtime, fetch_times_lookup_id) {
   try {
@@ -92,7 +92,7 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
           duration: duration,
           summary: summary,
           description: description,
-          start:  formatISO(appointmentTime).replace("T", " ").substring(0, 19),
+          start: formatISO(appointmentTime).replace("T", " ").substring(0, 19),
           start_time: appointmentTime.toLocaleTimeString(),
           event_location: location,
           event_ID: event_id,
@@ -114,6 +114,9 @@ async function createProvisional(e, sid, calendarid, duration, summary, location
         }
         if ($("input#friendlyAppointmentDate")) {
           $("input#friendlyAppointmentDate").val(format(e.startTime, "EEEE dd MMMM yyyy 'at' hh:mmaaa")).trigger("input");
+        }
+        if ($("input#appointmentDate")) {
+          $("input#appointmentDate").val(format(e.startTime, "yyyy-MM-dd")).trigger("input");
         }
         return responsePayload.data;
       });
